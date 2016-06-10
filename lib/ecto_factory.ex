@@ -1,0 +1,2 @@
+defmodule EctoFactory do
+end
