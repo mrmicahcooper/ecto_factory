@@ -1,8 +1,6 @@
 defmodule EctoFactoryTest do
   use ExUnit.Case
-  doctest EctoFactory
+  Code.load_file("test/user.ex")
 
-  test "the truth" do
-    assert 1 + 1 == 2
-  end
+  doctest EctoFactory
 end
