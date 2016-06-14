@@ -17,7 +17,10 @@ defmodule EctoFactory.Mixfile do
   end
 
   defp deps do
-    [{:ecto, "~> 1.1.8"}]
+    [
+      {:ecto, "~> 1.1.8"},
+      {:ex_doc, ">= 0.0.0", only: :dev},
+    ]
   end
 
   defp description do
