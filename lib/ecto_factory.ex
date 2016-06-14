@@ -1,25 +1,5 @@
 defmodule EctoFactory do
-  @moduledoc """
-  Create structs from your Ecto schemas.
-
-  ## How to use:
-  Define your factories in your config:
-
-      config :ecto_factory, factories: [
-        user: User,
-        default_user: { User },
-      ]
-
-  Use EctoFactory to generate your data:
-
-      iex> EctoFactory.build(:user)
-      %User{
-        age: 1,
-        username: "username",
-        date_of_birth: Ecto.DateTime.utc
-      }
-
-  """
+  @moduledoc File.read!("README.md") |> String.replace(~r/^# EctoFactory/, "")
 
   @models Application.get_env(:ecto_factory, :factories)
 

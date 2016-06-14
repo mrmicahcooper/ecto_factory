@@ -26,7 +26,7 @@ defmodule EctoFactory.Mixfile do
 
   defp description do
     """
-    Easily generate data based on your ecto schemas.
+    Easily generate structs based on your ecto schemas.
     """
   end
 

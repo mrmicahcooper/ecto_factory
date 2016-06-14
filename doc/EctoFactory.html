@@ -70,20 +70,48 @@
 
       
         <section id="moduledoc" class="docstring">
-          <p>Create structs from your Ecto schemas.</p>
-<h2>How to use:</h2>
-<p>Define your factories in your config:</p>
-<pre><code class="elixir">config :ecto_factory, factories: [
-  user: User,
-  default_user: { User },
+          <p>Easily generate structs based on your ecto schemas.</p>
+<p><a href="https://hexdocs.pm/ecto_factory/api-reference.html">View Hex docs</a></p>
+<h2>Installation</h2>
+<p>Add ecto_factory to your list of dependencies in <code class="inline">mix.exs</code>:</p>
+<pre><code class="elixir">def deps do
+  [{:ecto_factory, &quot;~&gt; 0.0.1&quot;}]
+end</code></pre>
+<h2>Usage</h2>
+<p>Using the following <code class="inline">MyApp.User</code> module:</p>
+<pre><code class="elixir">defmodule MyApp.User do
+  use Ecto.Schema
+
+  schema &quot;users&quot; do
+    field :age, :integer
+    field :username, :string
+    field :date_of_birth, Ecto.DateTime
+  end
+end
+</code></pre>
+<p>Configure ecto_factory in a few different ways.</p>
+<pre><code class="elixir">#./config.exs
+
+config :ecto_factory, factories: [
+  :user, MyApp.User 
+
+  :user_with_defaults, { MyApp.User, [
+    age: 99,
+    username: &quot;mrmicahcooper&quot;
+    date_of_birth: Ecto.DateTime.cast!(&quot;2012-12-12&quot;),
+  ] }
 ]</code></pre>
-<p>Use EctoFactory to generate your data:</p>
-<pre><code class="iex elixir">iex&gt; EctoFactory.build(:user)
-%User{
-  age: 1,
-  username: &quot;username&quot;,
-  date_of_birth: Ecto.DateTime.utc
-}</code></pre>
+<p>And that’s it. Now use <code class="inline">EctoFactory.build</code> to create structs.</p>
+<pre><code class="elixir">EctoFactory.build(:user) 
+#=&gt; %MyApp.User{age: 1, username: &quot;username, date_of_birth: #Ecto.DateTime&lt;2016-06-14T17:03:22Z&gt;}
+
+EctoFactory.build(:user, username: &quot;hashrocket&quot;)
+#=&gt; %MyApp.User{age: 1, username: &quot;hashrocket, date_of_birth: #Ecto.DateTime&lt;2016-06-14T17:03:22Z&gt;}
+
+Ecto.Factory.build(:user_with_defaults)
+#=&gt; %MyApp.User{age: 99, username: &quot;mrmicahcooper, date_of_birth: #Ecto.DateTime&lt;2012-12-12T00:00:00Z&gt;}
+</code></pre>
+<p>EctoFactory uses the fields you’ve defined in your schema to create some basic data that can be easily overwritten with a very small amount of configuration.</p>
 
         </section>
       
