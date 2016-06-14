@@ -1,40 +1,58 @@
 defmodule EctoFactory do
   @moduledoc """
-  ## Create structs and insert data from your Ecto schemas.
+  Create structs from your Ecto schemas.
 
-  ### How to use:
+  ## How to use:
   Define your factories in your config:
 
-  ```
-  config :ecto_factory, factories: [
-    user: User,
-    default_user: { User },
+      config :ecto_factory, factories: [
+        user: User,
+        default_user: { User },
+      ]
 
-    user_with_default_username: { User,
-      username: "mrmicahcooper"
-    }
-  ]
-  ```
+  Use EctoFactory to generate your data:
+
+      iex> EctoFactory.build(:user)
+      %User{
+        age: 1,
+        username: "username",
+        date_of_birth: Ecto.DateTime.utc
+      }
+
   """
 
   @models Application.get_env(:ecto_factory, :factories)
 
   @doc """
-  Create a struct of the passed in user type
+  Create a struct of the passed in factory
 
-  iex> EctoFactory.build(:user)
-  %User{
-    age: 1,
-    username: "username",
-    date_of_birth: Ecto.DateTime.utc
-  }
+  After configuring a factory
 
-  iex> EctoFactory.build(:user_with_default_username)
-  %User{
-    age: 1,
-    username: "mrmicahcooper",
-    date_of_birth: Ecto.DateTime.utc
-  }
+      config :ecto_factory, factories: [
+        user_with_default_username: { User,
+          username: "mrmicahcooper"
+        }
+      ]
+
+  You can build a struct with the attributes from my factory as defaults.
+
+      iex> EctoFactory.build(:user_with_default_username)
+      %User{
+        age: 1,
+        username: "mrmicahcooper",
+        date_of_birth: Ecto.DateTime.utc
+      }
+
+  And you can pass in your own attributes of course:
+
+      iex> EctoFactory.build(:user, age: 99, username: "hashrocket")
+      %User{
+        age: 99,
+        username: "hashrocket",
+        date_of_birth: Ecto.DateTime.utc
+      }
+
+
   """
   def build(model_name, attrs \\ %{}) do
     {model, attrs} = build_attrs(model_name, attrs)
