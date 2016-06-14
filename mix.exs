@@ -20,6 +20,7 @@ defmodule EctoFactory.Mixfile do
     [
       {:ecto, "~> 1.1.8"},
       {:ex_doc, ">= 0.0.0", only: :dev},
+      {:earmark, ">= 0.0.0"},
     ]
   end
 
