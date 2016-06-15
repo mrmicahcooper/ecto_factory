@@ -1,6 +1,4 @@
 defmodule EctoFactory do
-  @moduledoc File.read!("README.md") |> String.replace(~r/^# EctoFactory/, "")
-
   @models Application.get_env(:ecto_factory, :factories)
 
   @doc """
