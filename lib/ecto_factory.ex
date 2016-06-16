@@ -38,8 +38,8 @@ defmodule EctoFactory do
   end
 
   defp build_attrs(model_name, attrs) do
-    model  = model(model_name)
-    attributes  = model.__changeset__
+    model = model(model_name)
+    attributes = model.__changeset__
                   |> remove_primary_key(model)
                   |> Enum.map(&build_value/1)
                   |> Map.new()
@@ -50,6 +50,7 @@ defmodule EctoFactory do
 
   defp model(model_name) do
     case @models[model_name] do
+      nil        -> raise "Missing factory :#{model_name}"
       {model, _} -> model
       {model}    -> model
       model      -> model
