@@ -8,9 +8,15 @@ defmodule EctoFactoryTest do
   doctest EctoFactory
 
   test "missing factory" do
-    error_message = "Missing factory :foo"
+    error_message = """
+      Could not find factory by `:foo`.
+      Define it do your configuration:
 
-    assert_raise(RuntimeError, error_message, fn ->
+      config :ecto_factory, factories: [
+        foo: Myapp.EctoModule
+      ]
+    """
+    assert_raise(EctoFactory.MissingFactory, error_message, fn ->
       EctoFactory.build(:foo)
     end)
   end

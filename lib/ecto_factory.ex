@@ -2,11 +2,6 @@ defmodule EctoFactory do
 
   @factories Application.get_env(:ecto_factory, :factories)
   @repo Application.get_env(:ecto_factory, :repo)
-  @missing_repo_message """
-      You must configure `:repo` to insert data.
-      ie:
-        config :ecto_factory, `repo`: MyApp.Repo
-    """
 
   @doc """
   Create a struct of the passed in factory
@@ -83,7 +78,7 @@ defmodule EctoFactory do
 
   defp factory(factory_name) do
     case @factories[factory_name] do
-      nil               -> raise "Missing factory :#{factory_name}"
+      nil               -> raise(EctoFactory.MissingFactory, factory_name)
       {model, defaults} -> {model, defaults}
       {model}           -> {model, []}
       model             -> {model, []}
