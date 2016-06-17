@@ -4,7 +4,7 @@ defmodule EctoFactory.Mixfile do
   def project do
     [
       app: :ecto_factory,
-      version: "0.0.1",
+      version: "0.0.2",
       elixir: "~> 1.2",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -29,7 +29,7 @@ defmodule EctoFactory.Mixfile do
     [
       {:ecto, "~> 1.1.8"},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:earmark, ">= 0.0.0"},
+      {:earmark, ">= 0.0.0", only: :dev},
     ]
   end
 

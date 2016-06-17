@@ -5,14 +5,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.11.5">
-    <title>EctoFactory – EctoFactory v0.0.2</title>
+    <title>EctoFactory.MissingFactory – EctoFactory v0.0.2</title>
     <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
     
-      <link rel="canonical" href="https://hexdocs.pm/ecto_factory/EctoFactory.html" />
+      <link rel="canonical" href="https://hexdocs.pm/ecto_factory/EctoFactory.MissingFactory.html" />
     
     <script src="dist/sidebar_items.js"></script>
   </head>
-  <body data-type="modules">
+  <body data-type="exceptions">
 
     <div class="main">
 <button class="sidebar-toggle">
@@ -65,15 +65,22 @@
 
       <h1>
         <small class="visible-xs">EctoFactory v0.0.2</small>
-        EctoFactory
+        EctoFactory.MissingFactory
+        
+          <small>exception</small>
         
         
-          <a href="https://github.com/hashrocket/ecto_factory/blob/master/lib/ecto_factory.ex#L1" title="View Source" class="view-source" rel="help">
+          <a href="https://github.com/hashrocket/ecto_factory/blob/master/lib/ecto_factory/exceptions.ex#L1" title="View Source" class="view-source" rel="help">
             <i class="icon-code"></i>
           </a>
         
       </h1>
 
+      
+        <section id="moduledoc" class="docstring">
+          <p>Raised at runtime when the factory is not defined.</p>
+
+        </section>
       
 
       
@@ -93,19 +100,19 @@
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#build/2">build(factory_name, attrs \\ [])</a>
+    <a href="#exception/1">exception(msg)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Create a struct of the passed in factory</p>
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:Exception.exception/1</code></p>
 </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#insert/2">insert(factory_name, attrs \\ [])</a>
+    <a href="#message/1">message(exception)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Insert a factory into the database</p>
+    <div class="summary-synopsis"><p>Callback implementation for <code class="inline">c:Exception.message/1</code></p>
 </div>
   
 </div>
@@ -130,71 +137,59 @@
             </a>
             Functions
           </h1>
-          <div class="detail" id="build/2">
+          <div class="detail" id="exception/1">
   <div class="detail-header">
-    <a href="#build/2" class="detail-link" title="Link to this function">
+    <a href="#exception/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">build(factory_name, attrs \\ [])</span>
+    <span class="signature">exception(msg)</span>
       
-      <a href="https://github.com/hashrocket/ecto_factory/blob/master/lib/ecto_factory.ex#L39" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/hashrocket/ecto_factory/blob/master/lib/ecto_factory/exceptions.ex#L7" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
   </div>
   
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">exception(<a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/Exception.html#t:t/0">Exception.t</a></code></pre>
+        
+          <pre><code class="elixir">exception(<a href="http://elixir-lang.org/docs/stable/elixir/Keyword.html#t:t/0">Keyword.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/Exception.html#t:t/0">Exception.t</a></code></pre>
+        
+      </div>
+    </div>
+  
   <section class="docstring">
-    <p>Create a struct of the passed in factory</p>
-<p>After configuring a factory</p>
-<pre><code class="elixir">config :ecto_factory, factories: [
-  user: User,
-
-  user_with_default_username: { User,
-    username: &quot;mrmicahcooper&quot;
-  }
-]</code></pre>
-<p>You can build a struct with the attributes from my factory as defaults.</p>
-<pre><code class="iex elixir">iex&gt; EctoFactory.build(:user_with_default_username)
-%User{
-  age: 1,
-  username: &quot;mrmicahcooper&quot;,
-  date_of_birth: Ecto.DateTime.utc
-}</code></pre>
-<p>And you can pass in your own attributes of course:</p>
-<pre><code class="iex elixir">iex&gt; EctoFactory.build(:user, age: 99, username: &quot;hashrocket&quot;)
-%User{
-  age: 99,
-  username: &quot;hashrocket&quot;,
-  date_of_birth: Ecto.DateTime.utc
-}</code></pre>
+    <p>Callback implementation for <code class="inline">c:Exception.exception/1</code>.</p>
 
   </section>
 </div>
-<div class="detail" id="insert/2">
+<div class="detail" id="message/1">
   <div class="detail-header">
-    <a href="#insert/2" class="detail-link" title="Link to this function">
+    <a href="#message/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">insert(factory_name, attrs \\ [])</span>
+    <span class="signature">message(exception)</span>
       
-      <a href="https://github.com/hashrocket/ecto_factory/blob/master/lib/ecto_factory.ex#L62" class="view-source" rel="help" title="View Source">
+      <a href="https://github.com/hashrocket/ecto_factory/blob/master/lib/ecto_factory/exceptions.ex#L5" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
      </a>
     
   </div>
   
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">message(<a href="http://elixir-lang.org/docs/stable/elixir/Exception.html#t:t/0">Exception.t</a>) :: <a href="http://elixir-lang.org/docs/stable/elixir/String.html#t:t/0">String.t</a></code></pre>
+        
+      </div>
+    </div>
+  
   <section class="docstring">
-    <p>Insert a factory into the database.</p>
-<p><strong>NOTE:</strong> Be sure to set ecto_factory’s <code class="inline">:repo</code> configuration before you use <a href="#insert/2"><code class="inline">insert/2</code></a>.</p>
-<pre><code class="elixir">config :ecto_factory, repo: MyApp.Repo</code></pre>
-<h3>Example</h3>
-<pre><code class="iex elixir">iex&gt; EctoFactory.insert(:user, age: 99, username: &quot;hashrocket&quot;)
-%User{
-  id: 1,
-  age: 99,
-  username: &quot;hashrocket&quot;,
-  date_of_birth: Ecto.DateTime.utc
-}</code></pre>
+    <p>Callback implementation for <code class="inline">c:Exception.message/1</code>.</p>
 
   </section>
 </div>
