@@ -1,5 +1,12 @@
 defmodule EctoFactory do
+
   @factories Application.get_env(:ecto_factory, :factories)
+  @repo Application.get_env(:ecto_factory, :repo)
+  @missing_repo_message """
+      You must configure `:repo` to insert data.
+      ie:
+        config :ecto_factory, `repo`: MyApp.Repo
+    """
 
   @doc """
   Create a struct of the passed in factory
@@ -37,6 +44,30 @@ defmodule EctoFactory do
   def build(factory_name, attrs \\ []) do
     {model, attributes} = build_attrs(factory_name, attrs)
     struct(model, attributes)
+  end
+
+  @doc """
+  Insert a factory into the database.
+
+  __NOTE:__ Be sure to set ecto_factory's `:repo` configuration before you use `insert/2`.
+
+      config :ecto_factory, repo: MyApp.Repo
+
+  ### Example
+
+      iex> EctoFactory.insert(:user, age: 99, username: "hashrocket")
+      %User{
+        id: 1,
+        age: 99,
+        username: "hashrocket",
+        date_of_birth: Ecto.DateTime.utc
+      }
+
+  """
+  def insert(factory_name, attrs \\[]) do
+    unless @repo, do: raise(@missing_repo_message)
+    struct = build(factory_name, attrs)
+    @repo.insert!(struct)
   end
 
   defp build_attrs(factory_name, attributes) do
