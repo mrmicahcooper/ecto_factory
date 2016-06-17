@@ -32,37 +32,29 @@ defmodule EctoFactory do
 
 
   """
-  def build(model_name, attrs \\ %{}) do
+  def build(model_name, attrs \\ []) do
     {model, attrs} = build_attrs(model_name, attrs)
     struct(model, attrs)
   end
 
-  defp build_attrs(model_name, attrs) do
-    model = model(model_name)
-    attributes = model.__changeset__
-                  |> remove_primary_key(model)
-                  |> Enum.map(&build_value/1)
-                  |> Map.new()
-                  |> apply_defaults(model_name)
-                  |> Map.merge(Map.new(attrs))
-    { model, attributes }
+  defp build_attrs(model_name, attributes) do
+    {model, defaults} = factory(model_name)
+    attrs = model.__changeset__
+              |> remove_primary_key(model)
+              |> Enum.to_list()
+              |> Enum.map(&cast/1)
+              |> Keyword.merge(defaults)
+              |> Keyword.merge(attributes)
+    {model, attrs}
   end
 
-  defp model(model_name) do
+  defp factory(model_name) do
     case @models[model_name] do
-      nil        -> raise "Missing factory :#{model_name}"
-      {model, _} -> model
-      {model}    -> model
-      model      -> model
+      nil               -> raise "Missing factory :#{model_name}"
+      {model, defaults} -> {model, defaults}
+      {model}           -> {model, []}
+      model             -> {model, []}
     end
-  end
-
-  defp apply_defaults(map, model_name) do
-    attrs = case @models[model_name] do
-      {model, attrs} -> attrs |> Map.new()
-      _else          -> %{}
-    end
-    Map.merge(map, attrs)
   end
 
   defp remove_primary_key(model_map, model) do
@@ -72,13 +64,13 @@ defmodule EctoFactory do
     end
   end
 
-  defp build_value({key, :string}),      do: {key, Atom.to_string(key)}
-  defp build_value({key, :integer}),     do: {key, 1}
-  defp build_value({key, {:assoc, _}}),  do: {key, []}
-  defp build_value({key, Ecto.DateTime}) do
+  defp cast({key, :string}),      do: {key, Atom.to_string(key)}
+  defp cast({key, :integer}),     do: {key, 1}
+  defp cast({key, {:assoc, _}}),  do: {key, []}
+  defp cast({key, Ecto.DateTime}) do
     {key, Ecto.DateTime.cast!(:calendar.universal_time) }
   end
 
-  defp build_value({key, value}), do: {key, nil}
+  defp cast({key, value}), do: {key, nil}
 
 end
