@@ -9,7 +9,7 @@ Easily generate structs based on your ecto schemas.
 Add ecto_factory to your list of dependencies in `mix.exs`:
 
     def deps do
-      [{:ecto_factory, "~> 0.0.1"}]
+      [{:ecto_factory, "~> 0.0.2"}]
     end
 
 ## Usage

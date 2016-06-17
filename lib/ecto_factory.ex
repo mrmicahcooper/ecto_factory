@@ -16,7 +16,7 @@ defmodule EctoFactory do
         }
       ]
 
-  You can build a struct with the attributes from my factory as defaults.
+  You can build a struct with the attributes from your factory as defaults.
 
       iex> EctoFactory.build(:user_with_default_username)
       %User{
