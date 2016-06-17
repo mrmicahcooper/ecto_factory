@@ -1,5 +1,5 @@
 defmodule EctoFactory do
-  @models Application.get_env(:ecto_factory, :factories)
+  @factories Application.get_env(:ecto_factory, :factories)
 
   @doc """
   Create a struct of the passed in factory
@@ -7,6 +7,8 @@ defmodule EctoFactory do
   After configuring a factory
 
       config :ecto_factory, factories: [
+        user: User,
+
         user_with_default_username: { User,
           username: "mrmicahcooper"
         }
@@ -32,13 +34,13 @@ defmodule EctoFactory do
 
 
   """
-  def build(model_name, attrs \\ []) do
-    {model, attrs} = build_attrs(model_name, attrs)
-    struct(model, attrs)
+  def build(factory_name, attrs \\ []) do
+    {model, attributes} = build_attrs(factory_name, attrs)
+    struct(model, attributes)
   end
 
-  defp build_attrs(model_name, attributes) do
-    {model, defaults} = factory(model_name)
+  defp build_attrs(factory_name, attributes) do
+    {model, defaults} = factory(factory_name)
     attrs = model.__changeset__
               |> remove_primary_key(model)
               |> Enum.to_list()
@@ -48,19 +50,19 @@ defmodule EctoFactory do
     {model, attrs}
   end
 
-  defp factory(model_name) do
-    case @models[model_name] do
-      nil               -> raise "Missing factory :#{model_name}"
+  defp factory(factory_name) do
+    case @factories[factory_name] do
+      nil               -> raise "Missing factory :#{factory_name}"
       {model, defaults} -> {model, defaults}
       {model}           -> {model, []}
       model             -> {model, []}
     end
   end
 
-  defp remove_primary_key(model_map, model) do
+  defp remove_primary_key(model_changeset, model) do
     case model.__schema__(:autogenerate_id) do
-      {primary_key, _} -> Map.delete(model_map, primary_key)
-      _else            -> model_map
+      {primary_key, _} -> Map.delete(model_changeset, primary_key)
+      _else            -> model_changeset
     end
   end
 
