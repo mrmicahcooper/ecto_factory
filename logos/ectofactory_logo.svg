@@ -1,0 +1,25 @@
+<svg id="c3c2b4fe-0394-41d0-bf8e-adf3dae5c0f5" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348.38 600">
+  <defs>
+    <linearGradient id="e1105194-0eb6-4d70-a5fd-4f456101a328" x1="86.36" y1="300" x2="266.78" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#949494"/>
+      <stop offset="0" stop-color="#392047"/>
+      <stop offset="1" stop-color="#846a96"/>
+    </linearGradient>
+    <linearGradient id="1c886990-20b7-4192-9fb8-245cda911508" x1="41.09" y1="380.36" x2="124.49" y2="380.36" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#949494"/>
+      <stop offset="0" stop-color="#6d557c"/>
+      <stop offset="1" stop-color="#b2a3bc"/>
+    </linearGradient>
+    <linearGradient id="ca99dc6b-7687-4533-98e1-4fb13daa4146" x1="232.81" y1="418.12" x2="307.27" y2="418.12" xlink:href="#1c886990-20b7-4192-9fb8-245cda911508"/>
+  </defs>
+  <title>ectofactory</title>
+  <g>
+    <path d="M311.84,563.22c-0.38-1-37.57-98.21-37.57-292v-4.91h-41.8c-4.34-66.09-7.23-143.19-7.23-231.33V30.08H127.91V35c0,56.49-1.2,108.38-3.19,155.81H83.33v4.91C83.33,439.61,37,562,36.51,563.23l-2.59,6.68H314.46Z" style="fill: #fff"/>
+    <path d="M266.78,565H86.36s46.46-174.22,46.46-530h87.51C220.33,390.79,266.78,565,266.78,565Z" style="fill: url(#e1105194-0eb6-4d70-a5fd-4f456101a328)"/>
+    <path d="M81.61,563.74c0.39-1.45,32.26-124.13,42.88-368H88.24C88.24,443.62,41.09,565,41.09,565H81.28Z" style="fill: url(#1c886990-20b7-4192-9fb8-245cda911508)"/>
+    <path d="M271.53,563.74l0.34,1.26h35.41s-37.91-96.56-37.91-293.77H232.81C245.84,464.94,271.18,562.45,271.53,563.74Z" style="fill: url(#ca99dc6b-7687-4533-98e1-4fb13daa4146)"/>
+    <rect x="130.96" y="54.62" width="91.21" height="4.91" style="fill: #fff"/>
+    <path d="M179.9,154.73c1.55,24,7.37,24.79,14,32.94s18,23.29,5.24,38.81-38.42,14-46.38-8.93S171.95,155.75,179.9,154.73Z" style="fill: #fff"/>
+    <path d="M253,339l1.78-30.51H98.35L100.13,339H99.94l0.2,0.15,0,0.28h0.35l14.6,11.1H238l14.66-11.09H253l0-.28,0.2-.15H253Zm-3.43-25.61-1.23,21.13H104.79l-1.23-21.13h146Z" style="fill: #fff"/>
+  </g>
+</svg>
