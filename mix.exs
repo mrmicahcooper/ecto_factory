@@ -14,6 +14,7 @@ defmodule EctoFactory.Mixfile do
       description: description,
       deps: deps,
       docs: [
+        logo: "./logos/ectofactory_logo.png",
         extras: [
           "README.md"
         ]
