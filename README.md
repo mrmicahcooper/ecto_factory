@@ -1,4 +1,5 @@
-# EctoFactory
+<h1> <img width="400" src="/logos/ectofactory_logo_text.png"/></h1>
+
 
 Easily generate structs based on your ecto schemas.
 
