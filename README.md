@@ -11,7 +11,7 @@ Add ecto_factory to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:ecto_factory, "~> 0.0.2"}]
+  [{:ecto_factory, "~> 0.0.3"}]
 end
 ```
 
