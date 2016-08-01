@@ -15,7 +15,7 @@ def deps do
 end
 ```
 
-## Usage
+Configure your `repo` for EctoFactory:
 
 Using the following `MyApp.User` module:
 
@@ -32,11 +32,12 @@ end
 
 ```
 
-Configure ecto_factory in a few different ways.
+Configure ecto_factory factories and the `repo` to be used for inserting:
 
 ```elixir
 #./config.exs
 
+config :ecto_factory, repo: MyApp.Repo
 config :ecto_factory, factories: [
   :user, MyApp.User 
 
