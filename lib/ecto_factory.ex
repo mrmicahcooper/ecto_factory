@@ -1,7 +1,6 @@
 defmodule EctoFactory do
 
   @factories Application.get_env(:ecto_factory, :factories)
-  @repo Application.get_env(:ecto_factory, :repo)
 
   @doc """
   Create a struct of the passed in factory
@@ -60,9 +59,9 @@ defmodule EctoFactory do
 
   """
   def insert(factory_name, attrs \\[]) do
-    unless @repo, do: raise(@missing_repo_message)
+    unless repo, do: raise(EctoFactory.MissingRepo)
     struct = build(factory_name, attrs)
-    @repo.insert!(struct)
+    repo.insert!(struct)
   end
 
   defp build_attrs(factory_name, attributes) do
@@ -99,6 +98,8 @@ defmodule EctoFactory do
     {key, Ecto.DateTime.cast!(:calendar.universal_time) }
   end
 
-  defp cast({key, value}), do: {key, nil}
+  defp cast({key, _value}), do: {key, nil}
+
+  defp repo, do: Application.get_env(:ecto_factory, :repo)
 
 end

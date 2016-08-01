@@ -6,13 +6,14 @@ defmodule EctoFactory.MissingFactory do
 
   def exception(factory_name) do
     helper_text = """
-      Could not find factory by `:#{factory_name}`.
-      Define it do your configuration:
+    Could not find factory by `:#{factory_name}`.
+    Define it do your configuration:
 
-      config :ecto_factory, factories: [
-        #{factory_name}: Myapp.EctoModule
-      ]
+    config :ecto_factory, factories: [
+    #{factory_name}: Myapp.EctoModule
+    ]
     """
+
     %__MODULE__{message: helper_text}
   end
 end
@@ -24,12 +25,13 @@ defmodule EctoFactory.MissingRepo do
 
   defexception [:message]
 
-  def exception do
-  helper_text =  """
-      You must configure `:repo` to insert data.
+  def exception(_) do
+    helper_text =  """
+    You must configure `:repo` to insert data.
 
-      config :ecto_factory, `repo`: MyApp.Repo
+    config :ecto_factory, `repo`: MyApp.Repo
     """
+
     %__MODULE__{message: helper_text}
   end
 
