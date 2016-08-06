@@ -1,6 +1,5 @@
 defmodule EctoFactory do
 
-  @factories Application.get_env(:ecto_factory, :factories)
 
   @doc """
   Create a struct of the passed in factory
@@ -26,13 +25,13 @@ defmodule EctoFactory do
 
   And you can pass in your own attributes of course:
 
+
       iex> EctoFactory.build(:user, age: 99, username: "hashrocket")
       %User{
         age: 99,
         username: "hashrocket",
         date_of_birth: Ecto.DateTime.utc
       }
-
 
   """
   def build(factory_name, attrs \\ []) do
@@ -60,8 +59,7 @@ defmodule EctoFactory do
   """
   def insert(factory_name, attrs \\[]) do
     unless repo, do: raise(EctoFactory.MissingRepo)
-    struct = build(factory_name, attrs)
-    repo.insert!(struct)
+    build(factory_name, attrs) |> repo.insert!()
   end
 
   defp build_attrs(factory_name, attributes) do
@@ -76,7 +74,7 @@ defmodule EctoFactory do
   end
 
   defp factory(factory_name) do
-    case @factories[factory_name] do
+    case factories[factory_name] do
       nil               -> raise(EctoFactory.MissingFactory, factory_name)
       {model, defaults} -> {model, defaults}
       {model}           -> {model, []}
@@ -97,9 +95,9 @@ defmodule EctoFactory do
   defp cast({key, Ecto.DateTime}) do
     {key, Ecto.DateTime.cast!(:calendar.universal_time) }
   end
-
   defp cast({key, _value}), do: {key, nil}
 
   defp repo, do: Application.get_env(:ecto_factory, :repo)
+  defp factories, do: Application.get_env(:ecto_factory, :factories)
 
 end
