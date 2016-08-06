@@ -91,7 +91,8 @@ defmodule EctoFactory do
 
   defp cast({key, :string}),      do: {key, Atom.to_string(key)}
   defp cast({key, :integer}),     do: {key, 1}
-  defp cast({key, {:assoc, _}}),  do: {key, []}
+  defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
+  defp cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
   defp cast({key, Ecto.DateTime}) do
     {key, Ecto.DateTime.cast!(:calendar.universal_time) }
   end
