@@ -9,7 +9,7 @@ defmodule EctoFactory.Mixfile do
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       name: "EctoFactory",
-      source_url: "https://github.com/hashrocket/ecto_factory",
+      source_url: "https://github.com/mrmicahcooper/ecto_factory",
       package: package,
       description: description,
       deps: deps,
@@ -46,7 +46,7 @@ defmodule EctoFactory.Mixfile do
       licenses: ["Apache 2.0"],
       maintainers: ["Micah Cooper", "Hashrocket"],
       links: %{
-        "GitHub" => "https://github.com/hashrocket/ecto_factory",
+        "GitHub" => "https://github.com/mrmicahcooper/ecto_factory",
       }
     ]
   end
