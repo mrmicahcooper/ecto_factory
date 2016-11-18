@@ -64,3 +64,12 @@ EctoFactory.build(:user_with_defaults)
 ```
 
 EctoFactory uses the fields you've defined in your schema to create some basic data that can be easily overwritten with a very small amount of configuration.
+
+### Development
+
+```
+$ git clone https://github.com/mrmicahcooper/ecto_factory
+$ cd ecto_factory
+$ mix deps.get
+$ mix test
+```
