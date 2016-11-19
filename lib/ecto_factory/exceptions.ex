@@ -10,7 +10,7 @@ defmodule EctoFactory.MissingFactory do
     Define it do your configuration:
 
     config :ecto_factory, factories: [
-    #{factory_name}: Myapp.EctoModule
+      #{factory_name}: Myapp.EctoModule
     ]
     """
 
