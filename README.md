@@ -35,7 +35,7 @@ end
 Configure ecto_factory factories and the `repo` to be used for inserting:
 
 ```elixir
-#./config.exs
+# config/config.exs
 
 config :ecto_factory, repo: MyApp.Repo
 config :ecto_factory, factories: [
