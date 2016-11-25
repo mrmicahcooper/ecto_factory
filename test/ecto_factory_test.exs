@@ -10,7 +10,7 @@ defmodule EctoFactoryTest do
   test "missing factory" do
     error_message = """
     Could not find factory by `:foo`.
-    Define it do your configuration:
+    Define it in your configuration:
 
     config :ecto_factory, factories: [
     foo: Myapp.EctoModule

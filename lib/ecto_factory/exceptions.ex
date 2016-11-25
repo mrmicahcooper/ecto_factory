@@ -7,7 +7,7 @@ defmodule EctoFactory.MissingFactory do
   def exception(factory_name) do
     helper_text = """
     Could not find factory by `:#{factory_name}`.
-    Define it do your configuration:
+    Define it in your configuration:
 
     config :ecto_factory, factories: [
     #{factory_name}: Myapp.EctoModule
