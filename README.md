@@ -39,11 +39,11 @@ Configure ecto_factory factories and the `repo` to be used for inserting:
 
 config :ecto_factory, repo: MyApp.Repo
 config :ecto_factory, factories: [
-  :user, MyApp.User 
+  user: MyApp.User,
 
-  :user_with_defaults, { MyApp.User, [
+  user_with_defaults: { MyApp.User, [
     age: 99,
-    username: "mrmicahcooper"
+    username: "mrmicahcooper",
     date_of_birth: Ecto.DateTime.cast!("2012-12-12"),
   ] }
 ]
