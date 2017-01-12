@@ -58,8 +58,8 @@ defmodule EctoFactory do
 
   """
   def insert(factory_name, attrs \\[]) do
-    unless repo, do: raise(EctoFactory.MissingRepo)
-    build(factory_name, attrs) |> repo.insert!()
+    unless repo(), do: raise(EctoFactory.MissingRepo)
+    build(factory_name, attrs) |> repo().insert!()
   end
 
   defp build_attrs(factory_name, attributes) do
@@ -74,7 +74,7 @@ defmodule EctoFactory do
   end
 
   defp factory(factory_name) do
-    case factories[factory_name] do
+    case factories()[factory_name] do
       nil               -> raise(EctoFactory.MissingFactory, factory_name)
       {model, defaults} -> {model, defaults}
       {model}           -> {model, []}
