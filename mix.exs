@@ -10,9 +10,9 @@ defmodule EctoFactory.Mixfile do
       start_permanent: Mix.env == :prod,
       name: "EctoFactory",
       source_url: "https://github.com/mrmicahcooper/ecto_factory",
-      package: package,
-      description: description,
-      deps: deps,
+      package: package(),
+      description: description(),
+      deps: deps(),
       docs: [
         logo: "./logos/ectofactory_logo.png",
         extras: [
