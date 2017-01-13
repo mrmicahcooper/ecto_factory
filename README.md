@@ -1,4 +1,7 @@
-<h1> <img width="400" src="/logos/ectofactory_logo_text.png"/></h1>
+<h1>
+<img width="400" src="/logos/ectofactory_logo_text.png"/>
+</h1>
+<img src="https://travis-ci.org/mrmicahcooper/ecto_factory.svg?branch=master" alt="Build Status">
 
 
 Easily generate structs based on your ecto schemas.
