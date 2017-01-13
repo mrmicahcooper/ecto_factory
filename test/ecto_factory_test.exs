@@ -13,7 +13,7 @@ defmodule EctoFactoryTest do
     Define it in your configuration:
 
     config :ecto_factory, factories: [
-    foo: Myapp.EctoModule
+      foo: Myapp.EctoModule
     ]
     """
     assert_raise(EctoFactory.MissingFactory, error_message, fn ->
