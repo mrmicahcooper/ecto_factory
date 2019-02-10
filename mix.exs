@@ -6,8 +6,8 @@ defmodule EctoFactory.Mixfile do
       app: :ecto_factory,
       version: "0.0.6",
       elixir: "~> 1.4",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       name: "EctoFactory",
       source_url: "https://github.com/mrmicahcooper/ecto_factory",
       package: package(),
@@ -30,7 +30,7 @@ defmodule EctoFactory.Mixfile do
     [
       {:ecto, ">= 1.1.8"},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:earmark, ">= 0.0.0", only: :dev},
+      {:earmark, ">= 0.0.0", only: :dev}
     ]
   end
 
@@ -46,9 +46,8 @@ defmodule EctoFactory.Mixfile do
       licenses: ["Apache 2.0"],
       maintainers: ["Micah Cooper", "Hashrocket"],
       links: %{
-        "GitHub" => "https://github.com/mrmicahcooper/ecto_factory",
+        "GitHub" => "https://github.com/mrmicahcooper/ecto_factory"
       }
     ]
   end
-
 end
