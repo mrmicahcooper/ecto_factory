@@ -60,7 +60,7 @@ defmodule EctoFactory do
     {schema, attrs}
   end
 
-  def factory(factory_name) do
+  defp factory(factory_name) do
     case factories()[factory_name] do
       nil -> raise(EctoFactory.MissingFactory, factory_name)
       {schema, defaults} -> {schema, defaults}
