@@ -4,8 +4,8 @@ defmodule EctoFactory.Mixfile do
   def project do
     [
       app: :ecto_factory,
-      version: "0.0.6",
-      elixir: "~> 1.4",
+      version: "0.0.7",
+      elixir: "~> 1.9.1",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       name: "EctoFactory",
