@@ -1,9 +1,7 @@
 defmodule EctoFactory do
-<<<<<<< HEAD
-=======
-  import Enum, only: [random: 1, to_list: 1]
+  import Enum, only: [random: 1]
+  import Application, only: [get_env: 2]
 
->>>>>>> Simplify tests
   @doc """
   Create a struct of the passed in factory
 
@@ -50,9 +48,11 @@ defmodule EctoFactory do
         factory(factory_name)
       end
 
+    keys = Keyword.keys(defaults ++ attributes) ++ schema.__schema__(:primary_key)
+
     attrs =
-      schema.__changeset__
-      |> remove_primary_key(schema)
+      schema.__changeset__()
+      |> Map.drop(keys)
       |> Enum.map(&cast/1)
       |> Keyword.merge(defaults)
       |> Keyword.merge(attributes)
@@ -61,7 +61,7 @@ defmodule EctoFactory do
   end
 
   defp factory(factory_name) do
-    case factories()[factory_name] do
+    case get_env(:ecto_factory, :factories)[factory_name] do
       nil -> raise(EctoFactory.MissingFactory, factory_name)
       {schema, defaults} -> {schema, defaults}
       {schema} -> {schema, []}
@@ -69,28 +69,18 @@ defmodule EctoFactory do
     end
   end
 
-  defp remove_primary_key(schema_changeset, schema) do
-    case schema.__schema__(:autogenerate_id) do
-      {primary_key, _, _} -> Map.delete(schema_changeset, primary_key)
-      _else -> schema_changeset
-    end
-  end
-
   defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
   defp cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
   defp cast({key, data_type}), do: {key, gen(data_type)}
 
-  defp factories, do: Application.get_env(:ecto_factory, :factories)
-
   defp gen(:id), do: random(1..9_999_999)
   defp gen(:binary_id), do: Ecto.UUID.generate()
-  defp gen(:integer), do: random(1..9_999_999_999)
+  defp gen(:integer), do: random(1..9_999_999)
   defp gen(:float), do: (random(99..99999) / random(1..99)) |> Float.round(2)
   defp gen(:decimal), do: gen(:float)
   defp gen(:boolean), do: random([true, false])
   defp gen(:binary), do: Ecto.UUID.generate()
   defp gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
-  defp gen(:string), do: for(_ <- 1..random(8..24), into: "", do: <<random(alphabet())>>)
   defp gen(:date), do: Date.utc_today()
   defp gen(:time), do: Time.utc_now()
   defp gen(:time_usec), do: gen(:time)
@@ -99,17 +89,15 @@ defmodule EctoFactory do
   defp gen(:utc_datetime), do: DateTime.utc_now()
   defp gen(:utc_datetime_usec), do: gen(:utc_datetime)
 
-  defp gen(:map) do
-    gen({:array, :string})
-    |> Enum.map(fn key -> {key, gen(:string)} end)
-    |> Enum.into(%{})
+  defp gen(:string) do
+    for(_ <- 1..random(8..20), into: "", do: <<random(?a..?z)>>)
   end
+
+  defp gen(:map), do: gen({:map, :string})
 
   defp gen({:map, type}) do
-    gen({:array, :string})
-    |> Enum.map(fn key -> {key, gen(type)} end)
-    |> Enum.into(%{})
+    for(key <- gen({:array, :string}), into: %{}, do: {key, gen(type)})
   end
 
-  defp alphabet, do: to_list(?a..?z)
+  defp gen(_), do: nil
 end
