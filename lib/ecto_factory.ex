@@ -36,8 +36,8 @@ defmodule EctoFactory do
 
   """
   def build(factory_name, attrs \\ []) do
-    {model, attributes} = build_attrs(factory_name, attrs)
-    struct(model, attributes)
+    {schema, attributes} = build_attrs(factory_name, attrs)
+    struct(schema, attributes)
   end
 
   @doc """
@@ -63,32 +63,32 @@ defmodule EctoFactory do
   end
 
   defp build_attrs(factory_name, attributes) do
-    {model, defaults} = factory(factory_name)
+    {schema, defaults} = factory(factory_name)
 
     attrs =
-      model.__changeset__
-      |> remove_primary_key(model)
+      schema.__changeset__
+      |> remove_primary_key(schema)
       |> Enum.to_list()
       |> Enum.map(&cast/1)
       |> Keyword.merge(defaults)
       |> Keyword.merge(attributes)
 
-    {model, attrs}
+    {schema, attrs}
   end
 
   defp factory(factory_name) do
     case factories()[factory_name] do
       nil -> raise(EctoFactory.MissingFactory, factory_name)
-      {model, defaults} -> {model, defaults}
-      {model} -> {model, []}
-      model -> {model, []}
+      {schema, defaults} -> {schema, defaults}
+      {schema} -> {schema, []}
+      schema -> {schema, []}
     end
   end
 
-  defp remove_primary_key(model_changeset, model) do
-    case model.__schema__(:autogenerate_id) do
-      {primary_key, _} -> Map.delete(model_changeset, primary_key)
-      _else -> model_changeset
+  defp remove_primary_key(schema_changeset, schema) do
+    case schema.__schema__(:autogenerate_id) do
+      {primary_key, _} -> Map.delete(schema_changeset, primary_key)
+      _else -> schema_changeset
     end
   end
 
