@@ -1,6 +1,4 @@
 defmodule EctoFactory do
-
-
   @doc """
   Create a struct of the passed in factory
 
@@ -19,8 +17,7 @@ defmodule EctoFactory do
       iex> EctoFactory.build(:user_with_default_username)
       %User{
         age: 1,
-        username: "mrmicahcooper",
-        date_of_birth: Ecto.DateTime.utc
+        username: "mrmicahcooper"
       }
 
   And you can pass in your own attributes of course:
@@ -29,8 +26,7 @@ defmodule EctoFactory do
       iex> EctoFactory.build(:user, age: 99, username: "hashrocket")
       %User{
         age: 99,
-        username: "hashrocket",
-        date_of_birth: Ecto.DateTime.utc
+        username: "hashrocket"
       }
 
   """
@@ -52,53 +48,56 @@ defmodule EctoFactory do
       %User{
         id: 1,
         age: 99,
-        username: "hashrocket",
-        date_of_birth: Ecto.DateTime.utc
+        username: "hashrocket"
       }
 
   """
-  def insert(factory_name, attrs \\[]) do
+  def insert(factory_name, attrs \\ []) do
     unless repo(), do: raise(EctoFactory.MissingRepo)
     build(factory_name, attrs) |> repo().insert!()
   end
 
   defp build_attrs(factory_name, attributes) do
     {model, defaults} = factory(factory_name)
-    attrs = model.__changeset__
-              |> remove_primary_key(model)
-              |> Enum.to_list()
-              |> Enum.map(&cast/1)
-              |> Keyword.merge(defaults)
-              |> Keyword.merge(attributes)
+
+    attrs =
+      model.__changeset__
+      |> remove_primary_key(model)
+      |> Enum.to_list()
+      |> Enum.map(&cast/1)
+      |> Keyword.merge(defaults)
+      |> Keyword.merge(attributes)
+
     {model, attrs}
   end
 
   defp factory(factory_name) do
     case factories()[factory_name] do
-      nil               -> raise(EctoFactory.MissingFactory, factory_name)
+      nil -> raise(EctoFactory.MissingFactory, factory_name)
       {model, defaults} -> {model, defaults}
-      {model}           -> {model, []}
-      model             -> {model, []}
+      {model} -> {model, []}
+      model -> {model, []}
     end
   end
 
   defp remove_primary_key(model_changeset, model) do
     case model.__schema__(:autogenerate_id) do
       {primary_key, _} -> Map.delete(model_changeset, primary_key)
-      _else            -> model_changeset
+      _else -> model_changeset
     end
   end
 
-  defp cast({key, :string}),      do: {key, Atom.to_string(key)}
-  defp cast({key, :integer}),     do: {key, 1}
+  defp cast({key, :string}), do: {key, Atom.to_string(key)}
+  defp cast({key, :integer}), do: {key, 1}
   defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
   defp cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
-  defp cast({key, Ecto.DateTime}) do
-    {key, Ecto.DateTime.cast!(:calendar.universal_time) }
+
+  defp cast({key, :utc_datetime}) do
+    {key, DateTime.utc_now()}
   end
+
   defp cast({key, _value}), do: {key, nil}
 
   defp repo, do: Application.get_env(:ecto_factory, :repo)
   defp factories, do: Application.get_env(:ecto_factory, :factories)
-
 end

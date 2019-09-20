@@ -2,8 +2,7 @@ defmodule User do
   use Ecto.Schema
 
   schema "users" do
-    field :username
-    field :age, :integer
-    field :date_of_birth, Ecto.DateTime
+    field(:username)
+    field(:age, :integer)
   end
 end
