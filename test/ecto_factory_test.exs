@@ -14,22 +14,22 @@ defmodule EctoFactoryTest do
     """
 
     assert_raise(EctoFactory.MissingFactory, error_message, fn ->
-      EctoFactory.build(:foo)
+      EctoFactory.schema(:foo)
     end)
   end
 
   test "build by directly passing in a schema" do
-    user = EctoFactory.build(User)
+    user = EctoFactory.schema(User)
     assert user
   end
 
   test "build with attributes" do
-    user = EctoFactory.build(User, username: "foo")
+    user = EctoFactory.schema(User, username: "foo")
     assert user.username == "foo"
   end
 
   test "build by using defined factory and passed in attributes" do
-    user = EctoFactory.build(:user_with_default_username, age: 99)
+    user = EctoFactory.schema(:user_with_default_username, age: 99)
     assert user.username == "mrmicahcooper"
     assert user.age == 99
   end

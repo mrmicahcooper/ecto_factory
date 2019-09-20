@@ -17,7 +17,7 @@ defmodule EctoFactory do
 
   You can build a struct with the attributes from your factory as defaults.
 
-      EctoFactory.build(:user_with_default_username)
+      EctoFactory.schema(:user_with_default_username)
 
       %User{
         age: 124309132# random number
@@ -27,7 +27,7 @@ defmodule EctoFactory do
   And you can pass in your own attributes of course:
 
 
-      EctoFactory.build(:user, age: 99, username: "hashrocket")
+      EctoFactory.schema(:user, age: 99, username: "hashrocket")
 
     %User{
         age: 99,
@@ -35,7 +35,7 @@ defmodule EctoFactory do
       }
 
   """
-  def build(factory_name, attrs \\ []) do
+  def schema(factory_name, attrs \\ []) do
     {schema, attributes} = build_attrs(factory_name, attrs)
     struct(schema, attributes)
   end

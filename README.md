@@ -49,27 +49,27 @@ config :ecto_factory, factories: [
 ]
 ```
 
-And that's it. Now use `EctoFactory.build` to create structs.
+And that's it. Now use `EctoFactory.schema` to create structs.
 
 ```elixir
-EctoFactory.build(:user) 
+EctoFactory.schema(:user)
 #=> %MyApp.User{
   age: 23412394123,
   username: "asdjkfads",
   date_of_birth: ~U(2016-06-14T17:03:22Z)
 }
 
-EctoFactory.build(:user, username: "hashrocket")
+EctoFactory.schema(:user, username: "hashrocket")
 #=> %MyApp.User{
   age: 23412394123,
   username: "hashrocket",
   date_of_birth: ~U(2016-06-14T17:03:22Z)
 }
 
-EctoFactory.build(:user_with_defaults)
+EctoFactory.schema(:user_with_defaults)
 #=> %MyApp.User{
-  age: 99, 
-  username: "mrmicahcooper", 
+  age: 99,
+  username: "mrmicahcooper",
   date_of_birth: ~U(2012-12-12T00:00:00Z>
 }
 
