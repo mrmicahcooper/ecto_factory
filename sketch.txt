@@ -1,0 +1,21 @@
+Ecto Types to randomly generate
+
+# Ecto type            | Elixir type          | Literal syntax in query
+-# :id                  | integer              | 1, 2, 3
+- # :binary_id           | binary               | <<int, int, int, ...>>
+- # :integer             | integer              | 1, 2, 3
+- # :float               | float                | 1.0, 2.0, 3.0
+- # :boolean             | boolean              | true, false
+- # :string              | UTF-8 encoded string | "hello"
+- # :binary              | binary               | <<int, int, int, ...>>
+- # {:array, inner_type} | list                 | [value, value, value, ...]
+- # :map                 | map
+- # {:map, inner_type}   | map
+- # :decimal             | Decimal
+- # :date                | Date
+- # :time                | Time
+- # :time_usec           | Time
+- # :naive_datetime      | NaiveDateTime
+- # :naive_datetime_usec | NaiveDateTime
+# :utc_datetime        | DateTime
+# :utc_datetime_usec   | DateTime

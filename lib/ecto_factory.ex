@@ -1,4 +1,9 @@
 defmodule EctoFactory do
+<<<<<<< HEAD
+=======
+  import Enum, only: [random: 1, to_list: 1]
+
+>>>>>>> Simplify tests
   @doc """
   Create a struct of the passed in factory
 
@@ -100,4 +105,35 @@ defmodule EctoFactory do
 
   defp repo, do: Application.get_env(:ecto_factory, :repo)
   defp factories, do: Application.get_env(:ecto_factory, :factories)
+
+  def gen(:id), do: random(1..9_999_999_999)
+  def gen(:binary_id), do: Ecto.UUID.generate()
+  def gen(:integer), do: random(1..9_999_999_999)
+  def gen(:float), do: (random(99..99999) / random(1..99)) |> Float.round(2)
+  def gen(:decimal), do: gen(:float)
+  def gen(:boolean), do: random([true, false])
+  def gen(:binary), do: Ecto.UUID.generate()
+  def gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
+  def gen(:string), do: for(_ <- 1..random(8..24), into: "", do: <<random(alphabet())>>)
+  def gen(:date), do: Date.utc_today()
+  def gen(:time), do: Time.utc_now()
+  def gen(:time_usec), do: gen(:time)
+  def gen(:naive_datetime), do: NaiveDateTime.utc_now()
+  def gen(:naive_datetime_usec), do: gen(:naive_datetime)
+  def gen(:utc_datetime), do: DateTime.utc_now()
+  def gen(:utc_datetime_usec), do: gen(:utc_datetime)
+
+  def gen(:map) do
+    gen({:array, :string})
+    |> Enum.map(fn key -> {key, gen(:string)} end)
+    |> Enum.into(%{})
+  end
+
+  def gen({:map, type}) do
+    gen({:array, :string})
+    |> Enum.map(fn key -> {key, gen(type)} end)
+    |> Enum.into(%{})
+  end
+
+  defp alphabet, do: to_list(?a..?z) ++ to_list(?0..?9)
 end
