@@ -19,17 +19,19 @@ defmodule EctoFactory do
 
   You can build a struct with the attributes from your factory as defaults.
 
-      iex> EctoFactory.build(:user_with_default_username)
+      EctoFactory.build(:user_with_default_username)
+
       %User{
-        age: 1,
+        age: 124309132# random number
         username: "mrmicahcooper"
       }
 
   And you can pass in your own attributes of course:
 
 
-      iex> EctoFactory.build(:user, age: 99, username: "hashrocket")
-      %User{
+      EctoFactory.build(:user, age: 99, username: "hashrocket")
+
+    %User{
         age: 99,
         username: "hashrocket"
       }
@@ -49,10 +51,11 @@ defmodule EctoFactory do
 
   ### Example
 
-      iex> EctoFactory.insert(:user, age: 99, username: "hashrocket")
+      EctoFactory.insert(:user, age: 99, username: "hashrocket")
+
       %User{
         id: 1,
-        age: 99,
+        age: 981234123,
         username: "hashrocket"
       }
 

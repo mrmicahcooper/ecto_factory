@@ -4,8 +4,6 @@ defmodule EctoFactoryTest do
   Code.load_file("test/support/user.ex")
   Code.load_file("test/support/repo.ex")
 
-  doctest EctoFactory
-
   test "missing factory" do
     error_message = """
     Could not find factory by `:foo`.
