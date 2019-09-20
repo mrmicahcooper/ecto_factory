@@ -35,12 +35,11 @@ end
 
 ```
 
-Configure ecto_factory factories and the `repo` to be used for inserting:
+Configure ecto_factory factories setting default data:
 
 ```elixir
 # config/config.exs
 
-config :ecto_factory, repo: MyApp.Repo
 config :ecto_factory, factories: [
   user: MyApp.User,
 
@@ -66,7 +65,7 @@ EctoFactory.build(:user_with_defaults)
 
 ```
 
-EctoFactory uses the fields you've defined in your schema to create some basic data that can be easily overwritten with a very small amount of configuration.
+EctoFactory uses the fields you've defined in your schema to create random data that can be easily overwritten with a very small amount of configuration.
 
 ### Development
 

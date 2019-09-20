@@ -18,21 +18,3 @@ defmodule EctoFactory.MissingFactory do
   end
 end
 
-defmodule EctoFactory.MissingRepo do
-  @moduledoc """
-  Raised at runtime when trying to insert data without configuring `:repo`
-  """
-
-  defexception [:message]
-
-  def exception(_) do
-    helper_text =  """
-    You must configure `:repo` to insert data.
-
-    config :ecto_factory, `repo`: MyApp.Repo
-    """
-
-    %__MODULE__{message: helper_text}
-  end
-
-end

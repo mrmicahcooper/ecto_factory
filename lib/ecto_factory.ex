@@ -42,29 +42,6 @@ defmodule EctoFactory do
     struct(schema, attributes)
   end
 
-  @doc """
-  Insert a factory into the database.
-
-  __NOTE:__ Be sure to set ecto_factory's `:repo` configuration before you use `insert/2`.
-
-      config :ecto_factory, repo: MyApp.Repo
-
-  ### Example
-
-      EctoFactory.insert(:user, age: 99, username: "hashrocket")
-
-      %User{
-        id: 1,
-        age: 981234123,
-        username: "hashrocket"
-      }
-
-  """
-  def insert(factory_name, attrs \\ []) do
-    unless repo(), do: raise(EctoFactory.MissingRepo)
-    build(factory_name, attrs) |> repo().insert!()
-  end
-
   def build_attrs(factory_name, attributes) do
     {schema, defaults} =
       if function_exported?(factory_name, :__changeset__, 0) do
@@ -103,7 +80,6 @@ defmodule EctoFactory do
   def cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
   def cast({key, data_type}), do: {key, gen(data_type)}
 
-  def repo, do: Application.get_env(:ecto_factory, :repo)
   def factories, do: Application.get_env(:ecto_factory, :factories)
 
   def gen(:id), do: random(1..9_999_999_999)
