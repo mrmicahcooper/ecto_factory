@@ -40,7 +40,6 @@ defmodule EctoFactory do
     struct(schema, attributes)
   end
 
-
   def gen(:id), do: random(1..9_999_999)
   def gen(:binary_id), do: Ecto.UUID.generate()
   def gen(:integer), do: random(1..9_999_999)
@@ -66,6 +65,8 @@ defmodule EctoFactory do
   def gen({:map, type}) do
     for(key <- gen({:array, :string}), into: %{}, do: {key, gen(type)})
   end
+
+  def gen(:email), do: "#{gen(:string)}@#{gen(:string)}.#{gen(:string)}"
 
   def gen(_), do: nil
 
