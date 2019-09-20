@@ -40,6 +40,12 @@ defmodule EctoFactory do
     struct(schema, attributes)
   end
 
+  def attrs(factory_name, attrs \\ []) do
+    build_attrs(factory_name, attrs)
+    |> elem(1)
+    |> Enum.into(%{}, fn {k, v} -> {to_string(k), v} end)
+  end
+
   def gen(:id), do: random(1..9_999_999)
   def gen(:binary_id), do: Ecto.UUID.generate()
   def gen(:integer), do: random(1..9_999_999)

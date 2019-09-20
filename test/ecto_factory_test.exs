@@ -33,4 +33,10 @@ defmodule EctoFactoryTest do
     assert user.username == "mrmicahcooper"
     assert user.age == 99
   end
+
+  test "build attrs by using defined factory and passed in attributes" do
+    user = EctoFactory.attrs(:user_with_default_username, age: 99)
+    assert Map.get(user, "username") == "mrmicahcooper"
+    assert Map.get(user, "age") == 99
+  end
 end
