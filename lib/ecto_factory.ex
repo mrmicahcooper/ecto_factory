@@ -69,47 +69,47 @@ defmodule EctoFactory do
     end
   end
 
-  def remove_primary_key(schema_changeset, schema) do
+  defp remove_primary_key(schema_changeset, schema) do
     case schema.__schema__(:autogenerate_id) do
-      {primary_key, _} -> Map.delete(schema_changeset, primary_key)
+      {primary_key, _, _} -> Map.delete(schema_changeset, primary_key)
       _else -> schema_changeset
     end
   end
 
-  def cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
-  def cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
-  def cast({key, data_type}), do: {key, gen(data_type)}
+  defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
+  defp cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
+  defp cast({key, data_type}), do: {key, gen(data_type)}
 
-  def factories, do: Application.get_env(:ecto_factory, :factories)
+  defp factories, do: Application.get_env(:ecto_factory, :factories)
 
-  def gen(:id), do: random(1..9_999_999_999)
-  def gen(:binary_id), do: Ecto.UUID.generate()
-  def gen(:integer), do: random(1..9_999_999_999)
-  def gen(:float), do: (random(99..99999) / random(1..99)) |> Float.round(2)
-  def gen(:decimal), do: gen(:float)
-  def gen(:boolean), do: random([true, false])
-  def gen(:binary), do: Ecto.UUID.generate()
-  def gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
-  def gen(:string), do: for(_ <- 1..random(8..24), into: "", do: <<random(alphabet())>>)
-  def gen(:date), do: Date.utc_today()
-  def gen(:time), do: Time.utc_now()
-  def gen(:time_usec), do: gen(:time)
-  def gen(:naive_datetime), do: NaiveDateTime.utc_now()
-  def gen(:naive_datetime_usec), do: gen(:naive_datetime)
-  def gen(:utc_datetime), do: DateTime.utc_now()
-  def gen(:utc_datetime_usec), do: gen(:utc_datetime)
+  defp gen(:id), do: random(1..9_999_999)
+  defp gen(:binary_id), do: Ecto.UUID.generate()
+  defp gen(:integer), do: random(1..9_999_999_999)
+  defp gen(:float), do: (random(99..99999) / random(1..99)) |> Float.round(2)
+  defp gen(:decimal), do: gen(:float)
+  defp gen(:boolean), do: random([true, false])
+  defp gen(:binary), do: Ecto.UUID.generate()
+  defp gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
+  defp gen(:string), do: for(_ <- 1..random(8..24), into: "", do: <<random(alphabet())>>)
+  defp gen(:date), do: Date.utc_today()
+  defp gen(:time), do: Time.utc_now()
+  defp gen(:time_usec), do: gen(:time)
+  defp gen(:naive_datetime), do: NaiveDateTime.utc_now()
+  defp gen(:naive_datetime_usec), do: gen(:naive_datetime)
+  defp gen(:utc_datetime), do: DateTime.utc_now()
+  defp gen(:utc_datetime_usec), do: gen(:utc_datetime)
 
-  def gen(:map) do
+  defp gen(:map) do
     gen({:array, :string})
     |> Enum.map(fn key -> {key, gen(:string)} end)
     |> Enum.into(%{})
   end
 
-  def gen({:map, type}) do
+  defp gen({:map, type}) do
     gen({:array, :string})
     |> Enum.map(fn key -> {key, gen(type)} end)
     |> Enum.into(%{})
   end
 
-  def alphabet, do: to_list(?a..?z) ++ to_list(?0..?9)
+  defp alphabet, do: to_list(?a..?z)
 end
