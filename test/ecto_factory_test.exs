@@ -1,8 +1,8 @@
 defmodule EctoFactoryTest do
   use ExUnit.Case, async: true
 
-  Code.load_file("test/user.ex")
-  Code.load_file("test/repo.ex")
+  Code.load_file("test/support/user.ex")
+  Code.load_file("test/support/repo.ex")
 
   doctest EctoFactory
 
@@ -43,5 +43,10 @@ defmodule EctoFactoryTest do
     assert user.id == 1
     assert user.age == 99
     assert user.username == "hashrocket"
+  end
+
+  test "build by directly passing in a schema" do
+    user = EctoFactory.build(User)
+    assert user
   end
 end

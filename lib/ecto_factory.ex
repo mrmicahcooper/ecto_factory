@@ -62,13 +62,17 @@ defmodule EctoFactory do
     build(factory_name, attrs) |> repo().insert!()
   end
 
-  defp build_attrs(factory_name, attributes) do
-    {schema, defaults} = factory(factory_name)
+  def build_attrs(factory_name, attributes) do
+    {schema, defaults} =
+      if function_exported?(factory_name, :__changeset__, 0) do
+        {factory_name, []}
+      else
+        factory(factory_name)
+      end
 
     attrs =
       schema.__changeset__
       |> remove_primary_key(schema)
-      |> Enum.to_list()
       |> Enum.map(&cast/1)
       |> Keyword.merge(defaults)
       |> Keyword.merge(attributes)
@@ -76,7 +80,7 @@ defmodule EctoFactory do
     {schema, attrs}
   end
 
-  defp factory(factory_name) do
+  def factory(factory_name) do
     case factories()[factory_name] do
       nil -> raise(EctoFactory.MissingFactory, factory_name)
       {schema, defaults} -> {schema, defaults}
@@ -85,26 +89,19 @@ defmodule EctoFactory do
     end
   end
 
-  defp remove_primary_key(schema_changeset, schema) do
+  def remove_primary_key(schema_changeset, schema) do
     case schema.__schema__(:autogenerate_id) do
       {primary_key, _} -> Map.delete(schema_changeset, primary_key)
       _else -> schema_changeset
     end
   end
 
-  defp cast({key, :string}), do: {key, Atom.to_string(key)}
-  defp cast({key, :integer}), do: {key, 1}
-  defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
-  defp cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
+  def cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
+  def cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
+  def cast({key, data_type}), do: {key, gen(data_type)}
 
-  defp cast({key, :utc_datetime}) do
-    {key, DateTime.utc_now()}
-  end
-
-  defp cast({key, _value}), do: {key, nil}
-
-  defp repo, do: Application.get_env(:ecto_factory, :repo)
-  defp factories, do: Application.get_env(:ecto_factory, :factories)
+  def repo, do: Application.get_env(:ecto_factory, :repo)
+  def factories, do: Application.get_env(:ecto_factory, :factories)
 
   def gen(:id), do: random(1..9_999_999_999)
   def gen(:binary_id), do: Ecto.UUID.generate()
@@ -135,5 +132,5 @@ defmodule EctoFactory do
     |> Enum.into(%{})
   end
 
-  defp alphabet, do: to_list(?a..?z) ++ to_list(?0..?9)
+  def alphabet, do: to_list(?a..?z) ++ to_list(?0..?9)
 end
