@@ -61,13 +61,11 @@ defmodule EctoFactory do
   end
 
   def gen(:map), do: gen({:map, :string})
-
   def gen({:map, type}) do
     for(key <- gen({:array, :string}), into: %{}, do: {key, gen(type)})
   end
 
   def gen(:email), do: "#{gen(:string)}@#{gen(:string)}.#{gen(:string)}"
-
   def gen(_), do: nil
 
   defp build_attrs(factory_name, attributes) do
