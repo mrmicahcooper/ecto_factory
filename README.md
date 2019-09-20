@@ -18,9 +18,7 @@ def deps do
 end
 ```
 
-Configure your `repo` for EctoFactory:
-
-Using the following `MyApp.User` module:
+Assume we're using the following `MyApp.User` module:
 
 ```elixir
 defmodule MyApp.User do
@@ -29,13 +27,13 @@ defmodule MyApp.User do
   schema "users" do
     field :age, :integer
     field :username, :string
-    field :date_of_birth, Ecto.DateTime
+    field :date_of_birth, :date
   end
 end
 
 ```
 
-Configure ecto_factory factories setting default data:
+Configure ecto_factory factories to set some default data:
 
 ```elixir
 # config/config.exs
@@ -55,13 +53,25 @@ And that's it. Now use `EctoFactory.build` to create structs.
 
 ```elixir
 EctoFactory.build(:user) 
-#=> %MyApp.User{age: 1, username: "username, date_of_birth: ~U(2016-06-14T17:03:22Z)
+#=> %MyApp.User{
+  age: 23412394123,
+  username: "asdjkfads",
+  date_of_birth: ~U(2016-06-14T17:03:22Z)
+}
 
 EctoFactory.build(:user, username: "hashrocket")
-#=> %MyApp.User{age: 1, username: "hashrocket, date_of_birth: ~U(2016-06-14T17:03:22Z) }
+#=> %MyApp.User{
+  age: 23412394123,
+  username: "hashrocket",
+  date_of_birth: ~U(2016-06-14T17:03:22Z)
+}
 
 EctoFactory.build(:user_with_defaults)
-#=> %MyApp.User{age: 99, username: "mrmicahcooper, date_of_birth: ~U(2012-12-12T00:00:00Z>}
+#=> %MyApp.User{
+  age: 99, 
+  username: "mrmicahcooper", 
+  date_of_birth: ~U(2012-12-12T00:00:00Z>
+}
 
 ```
 
