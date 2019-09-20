@@ -67,6 +67,7 @@ defmodule EctoFactory do
   end
 
   def gen(:map), do: gen({:map, :string})
+
   def gen({:map, type}) do
     for(key <- gen({:array, :string}), into: %{}, do: {key, gen(type)})
   end
@@ -82,11 +83,15 @@ defmodule EctoFactory do
         factory(factory_name)
       end
 
-    keys = Keyword.keys(defaults ++ attributes) ++ schema.__schema__(:primary_key)
+    non_generated_keys =
+      defaults
+      |> Kernel.++(attributes)
+      |> Keyword.keys()
+      |> Kernel.++(schema.__schema__(:primary_key))
 
     attrs =
       schema.__changeset__()
-      |> Map.drop(keys)
+      |> Map.drop(non_generated_keys)
       |> Enum.map(&cast/1)
       |> Keyword.merge(defaults)
       |> Keyword.merge(attributes)
