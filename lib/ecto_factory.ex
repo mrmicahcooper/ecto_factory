@@ -99,7 +99,7 @@ defmodule EctoFactory do
     {schema, attrs}
   end
 
-  defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, []}
+  defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, nil}
   defp cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}
   defp cast({key, data_type}), do: {key, gen(data_type)}
 
@@ -108,6 +108,6 @@ defmodule EctoFactory do
       nil -> raise(EctoFactory.MissingFactory, factory_name)
       {schema, defaults} -> {schema, defaults}
       {schema} -> {schema, []}
-        end
+    end
   end
 end
