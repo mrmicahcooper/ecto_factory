@@ -46,6 +46,7 @@ defmodule EctoFactory do
     |> Enum.into(%{}, fn {k, v} -> {to_string(k), v} end)
   end
 
+  # Generators for the standard ecto types
   def gen(:id), do: random(1..9_999_999)
   def gen(:binary_id), do: Ecto.UUID.generate()
   def gen(:integer), do: random(1..9_999_999)
@@ -72,7 +73,10 @@ defmodule EctoFactory do
     for(key <- gen({:array, :string}), into: %{}, do: {key, gen(type)})
   end
 
+  # Special generators for helpful things
   def gen(:email), do: "#{gen(:string)}@#{gen(:string)}.#{gen(:string)}"
+
+  # fallback to nil - this should probably raise
   def gen(_), do: nil
 
   defp build_attrs(factory_name, attributes) do
@@ -95,9 +99,16 @@ defmodule EctoFactory do
       |> Enum.map(&cast/1)
       |> Keyword.merge(defaults)
       |> Keyword.merge(attributes)
+      |> Enum.map(&gen_attribute/1)
 
     {schema, attrs}
   end
+
+  defp gen_attribute({key, value}) when is_atom(value) or is_tuple(value) do
+    {key, gen(value)}
+  end
+
+  defp gen_attribute(key_value), do: key_value
 
   defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, nil}
   defp cast({key, {:assoc, %{cardinality: :one}}}), do: {key, nil}

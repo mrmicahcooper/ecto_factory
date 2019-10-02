@@ -39,4 +39,14 @@ defmodule EctoFactoryTest do
     assert Map.get(user, "username") == "mrmicahcooper"
     assert Map.get(user, "age") == 99
   end
+
+  test "using atoms for attributes for randomly generated things" do
+    user = EctoFactory.schema(User, username: :email)
+    assert String.match?(user.username, ~r/@/)
+  end
+
+  test "using tuples for attributes to randomly generate things" do
+    user = EctoFactory.schema(User, username: {:array, :email})
+    assert user.username |> List.first() |> String.match?(~r/@/)
+  end
 end
