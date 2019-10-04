@@ -35,11 +35,16 @@ defmodule EctoFactory do
       }
 
   """
+  @spec schema(atom() | Ecto.Schema, keyword()) :: Ecto.Schema
   def schema(factory_name, attrs \\ []) do
     {schema, attributes} = build_attrs(factory_name, attrs)
     struct(schema, attributes)
   end
 
+  @doc """
+  Create a map with randomly generated of the passed in Ecto schema
+  """
+  @spec schema(atom() | Ecto.Schema, keyword()) :: map()
   def attrs(factory_name, attrs \\ []) do
     build_attrs(factory_name, attrs)
     |> elem(1)
@@ -47,6 +52,20 @@ defmodule EctoFactory do
   end
 
   # Generators for the standard ecto types
+  @doc """
+  generate a random value
+  """
+  @spec gen(:atom | tuple()) ::
+          integer()
+          | binary()
+          | float()
+          | boolean()
+          | list()
+          | Time
+          | NaiveDateTime
+          | Date
+          | DateTime
+
   def gen(:id), do: random(1..9_999_999)
   def gen(:binary_id), do: Ecto.UUID.generate()
   def gen(:integer), do: random(1..9_999_999)
@@ -54,7 +73,6 @@ defmodule EctoFactory do
   def gen(:decimal), do: gen(:float)
   def gen(:boolean), do: random([true, false])
   def gen(:binary), do: Ecto.UUID.generate()
-  def gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
   def gen(:date), do: Date.utc_today()
   def gen(:time), do: Time.utc_now()
   def gen(:time_usec), do: gen(:time)
@@ -66,6 +84,9 @@ defmodule EctoFactory do
   def gen(:string) do
     for(_ <- 1..random(8..20), into: "", do: <<random(?a..?z)>>)
   end
+
+  def gen(:array), do: gen({:array, :string})
+  def gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
 
   def gen(:map), do: gen({:map, :string})
 
