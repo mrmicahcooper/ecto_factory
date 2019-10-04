@@ -76,7 +76,12 @@ defmodule EctoFactory do
   def gen(:date), do: Date.utc_today()
   def gen(:time), do: Time.utc_now()
   def gen(:time_usec), do: gen(:time)
-  def gen(:naive_datetime), do: NaiveDateTime.utc_now()
+
+  def gen(:naive_datetime) do
+    NaiveDateTime.utc_now()
+    |> NaiveDateTime.truncate(:second)
+  end
+
   def gen(:naive_datetime_usec), do: gen(:naive_datetime)
   def gen(:utc_datetime), do: DateTime.utc_now()
   def gen(:utc_datetime_usec), do: gen(:utc_datetime)
