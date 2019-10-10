@@ -53,9 +53,9 @@ defmodule EctoFactory do
 
   # Generators for the standard ecto types
   @doc """
-  generate a random value
+  Generate a random value. `gen/1` will return a value of the atom or tuple to pass it.
   """
-  @spec gen(:atom | tuple()) ::
+  @spec gen(atom() | tuple()) ::
           integer()
           | binary()
           | float()
@@ -130,10 +130,8 @@ defmodule EctoFactory do
     {schema, attrs}
   end
 
-  defp gen_attribute({key, value}) when is_atom(value) or is_tuple(value) do
-    {key, gen(value)}
-  end
-
+  defp gen_attribute({key, value}) when is_atom(value), do: {key, gen(value)}
+  defp gen_attribute({key, {_, _} = value}), do: {key, gen(value)}
   defp gen_attribute(key_value), do: key_value
 
   defp cast({key, {:assoc, %{cardinality: :many}}}), do: {key, nil}
