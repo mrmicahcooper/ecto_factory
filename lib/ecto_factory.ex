@@ -29,7 +29,7 @@ defmodule EctoFactory do
 
       EctoFactory.schema(:user, age: 99, username: "hashrocket")
 
-    %User{
+      %User{
         age: 99,
         username: "hashrocket"
       }
