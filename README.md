@@ -110,6 +110,71 @@ EctoFactory.schema(User,
 }
 ```
 
+You can also use EctoFactory's own generators to
+create radom data. You can do this when specifying
+attributes:
+
+```elixir
+EctoFactory.attrs(User,
+  username: :string, # random string
+  email: :email, # random email
+  address: {:map, :integer}, # map where the keys are random strings, and the values are random integers
+)
+
+#=> %User{
+  address: %{
+    "aduiasdoufp" => 12387128412,
+    "wfhsaaddha" => 1238194012
+  },
+  age: 1293812931,
+  date_of_birth: ~d[2019-01-01],
+  username: "asdlfkjad",
+}
+
+```
+
+You can also just call these straight from
+EctoFactory with `&Ectofactory.gen/1`:
+
+```elixir
+EctoFactory.gen(:id)
+# => 1204918243915 # randome integer
+
+EctoFactory.gen(:binary_id)
+# => "7D654105-F75D-4E73-8B97-BC7CE1E51EDA" # uuid
+
+EctoFactory.gen(:email)
+# => "yjlsbxdcyqhcwswwhv@ogrlycqeycqezslb.omuaqbhpqjmqtnbifoa" #email composed of a bunch of random strings
+```
+
+Here is a full list of the random things you can
+create. Notice this is a 1-1 mapping of Ecto's
+default data types with 1 (more to come)
+convenience type - `:email`
+
+```
+  :id
+  :binary_id
+  :integer
+  :float
+  :decimal
+  :boolean
+  :binary
+  :date
+  :time
+  :time_usec
+  :naive_datetime
+  :naive_datetime_usec
+  :utc_datetime
+  :utc_datetime_usec
+  :string
+  :array
+  {:array, type}
+  :map
+  {:map, type}
+  :email
+```
+
 ## Development
 
 ```
