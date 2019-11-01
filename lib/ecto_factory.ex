@@ -102,8 +102,8 @@ defmodule EctoFactory do
   def gen({:string, length}) do
     for(_ <- 1..length, into: "", do: <<random(?a..?z)>>)
   end
-
-
+  def gen({:integer, max}) when is_integer(max), do: random(1..max)
+  def gen({:integer, %Range{}=range}), do: random(range)
 
   # fallback to nil - this should probably raise
   def gen(_), do: nil

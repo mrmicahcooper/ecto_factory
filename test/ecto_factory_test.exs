@@ -53,4 +53,14 @@ defmodule EctoFactoryTest do
   test "getting a string with a set number of characters" do
     assert EctoFactory.gen({:string, 9}) |> String.length() == 9
   end
+
+  test "gen a random integer with a max number" do
+    assert EctoFactory.gen({:integer, 100}) < 100
+  end
+
+  test "gen a random integer with a range" do
+    number = EctoFactory.gen({:integer, 2..20})
+    assert number <= 20
+    assert number >= 2
+  end
 end
