@@ -49,4 +49,8 @@ defmodule EctoFactoryTest do
     user = EctoFactory.schema(User, username: {:array, :email})
     assert user.username |> List.first() |> String.match?(~r/@/)
   end
+
+  test "getting a string with a set number of characters" do
+    assert EctoFactory.gen({:string, 9}) |> String.length() == 9
+  end
 end

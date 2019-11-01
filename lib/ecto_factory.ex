@@ -86,9 +86,7 @@ defmodule EctoFactory do
   def gen(:utc_datetime), do: DateTime.utc_now()
   def gen(:utc_datetime_usec), do: gen(:utc_datetime)
 
-  def gen(:string) do
-    for(_ <- 1..random(8..20), into: "", do: <<random(?a..?z)>>)
-  end
+  def gen(:string), do: gen({:string, random(8..20)})
 
   def gen(:array), do: gen({:array, :string})
   def gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
@@ -101,6 +99,11 @@ defmodule EctoFactory do
 
   # Special generators for helpful things
   def gen(:email), do: "#{gen(:string)}@#{gen(:string)}.#{gen(:string)}"
+  def gen({:string, length}) do
+    for(_ <- 1..length, into: "", do: <<random(?a..?z)>>)
+  end
+
+
 
   # fallback to nil - this should probably raise
   def gen(_), do: nil
