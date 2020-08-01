@@ -13,6 +13,7 @@ defmodule EctoFactory.Mixfile do
       package: package(),
       description: description(),
       deps: deps(),
+      aliases: aliases(),
       docs: [
         logo: "./logos/ectofactory_logo.png",
         extras: [
@@ -38,6 +39,12 @@ defmodule EctoFactory.Mixfile do
     """
     Easily generate structs based on your ecto schemas.
     """
+  end
+
+  defp aliases do
+    [
+      test: ["test --trace"]
+    ]
   end
 
   defp package do
