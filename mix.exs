@@ -29,7 +29,7 @@ defmodule EctoFactory.Mixfile do
 
   defp deps do
     [
-      {:ecto, "~> 3.2.1"},
+      {:ecto, "~> 3.0"},
       {:ex_doc, "~> 0.21.2", only: :dev},
       {:earmark, "~> 1.4.0", only: :dev}
     ]
