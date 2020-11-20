@@ -1,7 +1,7 @@
 defmodule EctoFactoryTest do
   use ExUnit.Case, async: true
 
-  Code.load_file("test/support/user.ex")
+  Code.require_file("test/support/user.ex")
 
   test "missing factory" do
     error_message = """
