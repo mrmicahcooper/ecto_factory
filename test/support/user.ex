@@ -7,5 +7,6 @@ defmodule User do
     field(:date_of_birth, :date)
     field(:addresses, {:array, :string})
     field(:profile, :map)
+    field(:admin, :boolean)
   end
 end

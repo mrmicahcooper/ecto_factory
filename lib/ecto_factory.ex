@@ -130,7 +130,7 @@ defmodule EctoFactory do
     {schema, attrs}
   end
 
-  defp gen_attribute({key, value}) when is_atom(value), do: {key, gen(value)}
+  defp gen_attribute({key, value}) when is_atom(value) and value not in [true, false], do: {key, gen(value)}
   defp gen_attribute({key, {_, _} = value}), do: {key, gen(value)}
   defp gen_attribute(key_value), do: key_value
 

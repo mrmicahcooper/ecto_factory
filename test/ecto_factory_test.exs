@@ -21,6 +21,7 @@ defmodule EctoFactoryTest do
   test "build by directly passing in a schema" do
     user = EctoFactory.schema(User)
     assert user
+    assert Enum.member?([true, false], user.admin)
   end
 
   test "build with attributes" do
