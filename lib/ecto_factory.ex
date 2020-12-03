@@ -35,7 +35,7 @@ defmodule EctoFactory do
       }
 
   """
-  @spec schema(atom() | Ecto.Schema, keyword()) :: Ecto.Schema
+  @spec schema(atom() | Ecto.Schema, keyword() | map()) :: Ecto.Schema
   def schema(factory_name, attrs \\ []) do
     {schema, attributes} = build_attrs(factory_name, attrs)
     struct(schema, attributes)
@@ -44,7 +44,7 @@ defmodule EctoFactory do
   @doc """
   Create a map with randomly generated of the passed in Ecto schema
   """
-  @spec schema(atom() | Ecto.Schema, keyword()) :: map()
+  @spec attrs(atom() | Ecto.Schema, keyword() | map()) :: map()
   def attrs(factory_name, attrs \\ []) do
     build_attrs(factory_name, attrs)
     |> elem(1)
@@ -112,6 +112,8 @@ defmodule EctoFactory do
       else
         factory(factory_name)
       end
+
+    attributes = Enum.into(attributes, [])
 
     non_generated_keys =
       defaults
