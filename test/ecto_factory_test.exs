@@ -1,6 +1,7 @@
 defmodule EctoFactoryTest do
   use ExUnit.Case, async: true
 
+  Code.require_file("test/support/ecto_uri.ex")
   Code.require_file("test/support/user.ex")
 
   test "missing factory" do
@@ -22,6 +23,7 @@ defmodule EctoFactoryTest do
     user = EctoFactory.schema(User)
     assert user
     assert Enum.member?([true, false], user.admin)
+    assert is_map(user.avatar_url)
   end
 
   test "build with attributes" do
