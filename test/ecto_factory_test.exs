@@ -29,6 +29,11 @@ defmodule EctoFactoryTest do
     assert user.username == "foo"
   end
 
+  test "schema responds to Map arguments" do
+    user = EctoFactory.schema(User, %{username: "foo"})
+    assert user.username == "foo"
+  end
+
   test "build by using defined factory and passed in attributes" do
     user = EctoFactory.schema(:user_with_default_username, age: 99)
     assert user.username == "mrmicahcooper"
@@ -38,6 +43,11 @@ defmodule EctoFactoryTest do
   test "build attrs by using defined factory and passed in attributes" do
     user = EctoFactory.attrs(:user_with_default_username, age: 99)
     assert Map.get(user, "username") == "mrmicahcooper"
+    assert Map.get(user, "age") == 99
+  end
+
+  test "attrs responds to map arguments" do
+    user = EctoFactory.attrs(User, %{age: 99})
     assert Map.get(user, "age") == 99
   end
 
