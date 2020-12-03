@@ -10,5 +10,7 @@ defmodule User do
     field(:profile, :map)
     field(:admin, :boolean)
     field(:avatar_url, EctoURI)
+    has_many(:blog_posts, BlogPost)
+    belongs_to(:role, Role)
   end
 end
