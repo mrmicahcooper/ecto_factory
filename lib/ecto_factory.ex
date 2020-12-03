@@ -102,6 +102,17 @@ defmodule EctoFactory do
   # Special generators for helpful things
   def gen(:email), do: "#{gen(:string)}@#{gen(:string)}.#{gen(:string)}"
 
+  # Module names are atoms
+  # When the schema passes in a module, ask it for it's Ecto type
+  #
+  # schema "users" do
+  #   field(:balance, EctoURI)
+  # end
+  #
+  # Ecto Types must identify themselves with a type() function
+  # https://hexdocs.pm/ecto/Ecto.Type.html
+  def gen(ecto_type_module) when is_atom(ecto_type_module), do: gen(ecto_type_module.type)
+
   # fallback to nil - this should probably raise
   def gen(_), do: nil
 
