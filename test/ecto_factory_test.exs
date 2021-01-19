@@ -49,6 +49,12 @@ defmodule EctoFactoryTest do
     assert Map.get(user, "age") == 99
   end
 
+  test "build a map of attrbitutes where the keys are atoms" do
+    user = EctoFactory.build(:user_with_default_username, %{age: 99})
+    assert Map.get(user, :username) == "mrmicahcooper"
+    assert Map.get(user, :age) == 99
+  end
+
   test "using atoms for attributes for randomly generated things" do
     user = EctoFactory.schema(User, username: :email)
     assert String.match?(user.username, ~r/@/)
