@@ -42,13 +42,25 @@ defmodule EctoFactory do
   end
 
   @doc """
-  Create a map with randomly generated of the passed in Ecto schema
+  Create a map with string keys of randomly generated data with the passed-in Ecto schema
   """
   @spec attrs(atom() | Ecto.Schema, keyword() | map()) :: map()
   def attrs(factory_name, attrs \\ []) do
+    generate_attrs(factory_name, attrs, fn {k, v} -> {to_string(k), v} end)
+  end
+
+  @doc """
+  Create a map with atom keys of randomly generated data with the passed-in Ecto schema
+  """
+  @spec atomized_attrs(atom() | Ecto.Schema, keyword() | map()) :: map()
+  def atomized_attrs(factory_name, attrs \\ []) do
+    generate_attrs(factory_name, attrs, fn {k, v} -> {k, v} end)
+  end
+
+  defp generate_attrs(factory_name, attrs, key_value_func) do
     build_attrs(factory_name, attrs)
     |> elem(1)
-    |> Enum.into(%{}, fn {k, v} -> {to_string(k), v} end)
+    |> Enum.into(%{}, key_value_func)
   end
 
   # Generators for the standard ecto types

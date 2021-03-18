@@ -49,6 +49,18 @@ defmodule EctoFactoryTest do
     assert Map.get(user, "age") == 99
   end
 
+  test "build atomized attrs by using defined factory and passed in attributes" do
+    user = EctoFactory.atomized_attrs(:user_with_default_username, age: 99)
+    assert Map.get(user, :username) == "mrmicahcooper"
+    assert Map.get(user, :age) == 99
+  end
+
+  test "build atomized attrs by using defined factory and a map of attributes" do
+    user = EctoFactory.atomized_attrs(:user_with_default_username, %{age: 99})
+    assert Map.get(user, :username) == "mrmicahcooper"
+    assert Map.get(user, :age) == 99
+  end
+
   test "using atoms for attributes for randomly generated things" do
     user = EctoFactory.schema(User, username: :email)
     assert String.match?(user.username, ~r/@/)

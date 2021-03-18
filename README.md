@@ -122,6 +122,18 @@ EctoFactory.attrs(User,
 )
 
 #=> %User{
+  "address" => %{
+    "aduiasdoufp" => 12387128412,
+    "wfhsaaddha" => 1238194012
+  },
+  "age" => 1293812931,
+  "date_of_birth" => ~d[2019-01-01],
+  "username" => "asdlfkjad",
+}
+
+EctoFactory.atomized_attrs(User)
+
+#=> %User{
   address: %{
     "aduiasdoufp" => 12387128412,
     "wfhsaaddha" => 1238194012
@@ -130,7 +142,6 @@ EctoFactory.attrs(User,
   date_of_birth: ~d[2019-01-01],
   username: "asdlfkjad",
 }
-
 ```
 
 You can also just call these straight from
