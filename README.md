@@ -111,6 +111,29 @@ EctoFactory.schema(User,
 ```
 
 You can also use EctoFactory's own generators to
+create radom data. You can do this with `build`.
+
+```elixir
+EctoFactory.build(User,
+  username: :string, # random string
+  email: :email, # random email
+  address: {:map, :integer}, # map where the keys are random strings, and the values are random integers
+)
+
+#=> %{
+  address: %{
+    aduiasdoufp => 12387128412,
+    wfhsaaddha => 1238194012
+  },
+  age: 1293812931,
+  date_of_birth: ~d[2019-01-01],
+  username: "asdlfkjad",
+}
+
+```
+When using `build` the keys of your map will be atoms
+
+You can also use EctoFactory's own generators to
 create radom data. You can do this when specifying
 attributes:
 
@@ -121,17 +144,18 @@ EctoFactory.attrs(User,
   address: {:map, :integer}, # map where the keys are random strings, and the values are random integers
 )
 
-#=> %User{
-  address: %{
+#=> %{
+  "address" => %{
     "aduiasdoufp" => 12387128412,
     "wfhsaaddha" => 1238194012
   },
-  age: 1293812931,
-  date_of_birth: ~d[2019-01-01],
-  username: "asdlfkjad",
+  "age" => 1293812931,
+  "date_of_birth" => ~d[2019-01-01],
+  "username" => "asdlfkjad",
 }
 
 ```
+When using `attrs` the keys of your map will be strings
 
 You can also just call these straight from
 EctoFactory with `&Ectofactory.gen/1`:
