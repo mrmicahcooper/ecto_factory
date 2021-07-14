@@ -13,7 +13,6 @@ defmodule EctoFactory.Mixfile do
       package: package(),
       description: description(),
       deps: deps(),
-      aliases: aliases(),
       docs: [
         logo: "./logos/ectofactory_logo.png",
         extras: [
@@ -41,17 +40,11 @@ defmodule EctoFactory.Mixfile do
     """
   end
 
-  defp aliases do
-    [
-      test: ["test --trace"]
-    ]
-  end
-
   defp package do
     [
       name: :ecto_factory,
       licenses: ["Apache 2.0"],
-      maintainers: ["Micah Cooper", "Hashrocket"],
+      maintainers: ["Micah Cooper"],
       links: %{
         "GitHub" => "https://github.com/mrmicahcooper/ecto_factory"
       }
