@@ -64,4 +64,9 @@ defmodule EctoFactoryTest do
     user = EctoFactory.schema(User, username: {:array, :email})
     assert user.username |> List.first() |> String.match?(~r/@/)
   end
+
+  test "gen a url" do
+    user = EctoFactory.schema(User, username: :url)
+    assert Regex.match?(~r/^https.+\w+\..+\w+$/, user.username)
+  end
 end

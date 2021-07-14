@@ -95,10 +95,7 @@ defmodule EctoFactory do
   def gen(:naive_datetime_usec), do: gen(:naive_datetime)
   def gen(:utc_datetime), do: DateTime.utc_now()
   def gen(:utc_datetime_usec), do: gen(:utc_datetime)
-
-  def gen(:string) do
-    for(_ <- 1..random(8..20), into: "", do: <<random(?a..?z)>>)
-  end
+  def gen(:string), do: random_string(20)
 
   def gen(:array), do: gen({:array, :string})
   def gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
@@ -111,6 +108,12 @@ defmodule EctoFactory do
 
   # Special generators for helpful things
   def gen(:email), do: "#{gen(:string)}@#{gen(:string)}.#{gen(:string)}"
+
+  def gen(:url) do
+    host = random_string(3..6) <> "." <> random_string(4..8)
+    tld = ~w[com co.uk ninja ca biz org gov software io us rome.it ai] |> random()
+    "https://#{host}.#{tld}"
+  end
 
   # Module names are atoms
   # When the schema passes in a module, ask it for it's Ecto type
@@ -169,5 +172,13 @@ defmodule EctoFactory do
       {schema, defaults} -> {schema, defaults}
       {schema} -> {schema, []}
     end
+  end
+
+  defp random_string(min..max) do
+    for(_ <- 1..random(min..max), into: "", do: <<random(?a..?z)>>)
+  end
+
+  defp random_string(max_length) do
+    for(_ <- 1..random(8..max_length), into: "", do: <<random(?a..?z)>>)
   end
 end
