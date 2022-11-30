@@ -23,7 +23,7 @@ defmodule EctoFactory.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :ecto]]
   end
 
   defp deps do

@@ -130,6 +130,7 @@ defmodule EctoFactory do
   def gen(_), do: nil
 
   defp build_attrs(factory_name, attributes) do
+    Code.ensure_loaded(factory_name)
     {schema, defaults} =
       if function_exported?(factory_name, :__changeset__, 0) do
         {factory_name, []}
