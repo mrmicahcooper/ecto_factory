@@ -1,4 +1,9 @@
 defmodule EctoFactory do
+  @moduledoc """
+  EctoFactory is a super easy way to generate fake data for an Ecto Schema.
+  It requires zero setup and generates random data based on the fields you've defined.
+  """
+
   import Enum, only: [random: 1]
   import Application, only: [get_env: 2]
 

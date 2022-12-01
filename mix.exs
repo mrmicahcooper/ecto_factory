@@ -4,7 +4,7 @@ defmodule EctoFactory.Mixfile do
   def project do
     [
       app: :ecto_factory,
-      version: "0.3.0",
+      version: "0.3.1",
       elixir: "~> 1.13",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -14,6 +14,7 @@ defmodule EctoFactory.Mixfile do
       description: description(),
       deps: deps(),
       docs: [
+        main: "readme",
         logo: "./logos/ectofactory_logo.png",
         extras: [
           "README.md"
@@ -36,14 +37,14 @@ defmodule EctoFactory.Mixfile do
 
   defp description do
     """
-    Easily generate structs based on your ecto schemas.
+    Easily generate structs and maps based on your ecto schemas.
     """
   end
 
   defp package do
     [
       name: :ecto_factory,
-      licenses: ["Apache 2.0"],
+      licenses: ["Apache-2.0"],
       maintainers: ["Micah Cooper"],
       links: %{
         "GitHub" => "https://github.com/mrmicahcooper/ecto_factory"
