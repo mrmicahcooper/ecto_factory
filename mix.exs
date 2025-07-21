@@ -5,7 +5,7 @@ defmodule EctoFactory.Mixfile do
     [
       app: :ecto_factory,
       version: "0.3.1",
-      elixir: "~> 1.13",
+      elixir: "~> 1.18",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       name: "EctoFactory",

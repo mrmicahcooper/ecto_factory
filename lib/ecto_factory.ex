@@ -136,6 +136,7 @@ defmodule EctoFactory do
 
   defp build_attrs(factory_name, attributes) do
     Code.ensure_loaded(factory_name)
+
     {schema, defaults} =
       if function_exported?(factory_name, :__changeset__, 0) do
         {factory_name, []}
@@ -180,8 +181,8 @@ defmodule EctoFactory do
     end
   end
 
-  defp random_string(min..max) do
-    for(_ <- 1..random(min..max), into: "", do: <<random(?a..?z)>>)
+  defp random_string(%Range{} = range) do
+    for(_ <- 1..random(range), into: "", do: <<random(?a..?z)>>)
   end
 
   defp random_string(max_length) do
