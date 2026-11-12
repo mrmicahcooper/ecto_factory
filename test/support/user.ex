@@ -1,6 +1,5 @@
 defmodule User do
   use Ecto.Schema
-  alias EctoURI
 
   schema "users" do
     field(:username)

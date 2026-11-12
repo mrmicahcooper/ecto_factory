@@ -1,9 +1,6 @@
 defmodule EctoFactoryTest do
   use ExUnit.Case, async: true
 
-  Code.require_file("test/support/ecto_uri.ex")
-  Code.require_file("test/support/user.ex")
-
   test "missing factory" do
     error_message = """
     Could not find factory by `:foo`.

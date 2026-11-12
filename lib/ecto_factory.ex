@@ -91,32 +91,22 @@ defmodule EctoFactory do
   def gen(:date), do: Date.utc_today()
   def gen(:time), do: Time.utc_now()
   def gen(:time_usec), do: gen(:time)
-
-  def gen(:naive_datetime) do
-    NaiveDateTime.utc_now()
-    |> NaiveDateTime.truncate(:second)
-  end
-
   def gen(:naive_datetime_usec), do: gen(:naive_datetime)
   def gen(:utc_datetime), do: DateTime.utc_now()
   def gen(:utc_datetime_usec), do: gen(:utc_datetime)
   def gen(:string), do: random_string(20)
-
   def gen(:array), do: gen({:array, :string})
   def gen({:array, type}), do: 1..random(2..9) |> Enum.map(fn _ -> gen(type) end)
-
   def gen(:map), do: gen({:map, :string})
-
-  def gen({:map, type}) do
-    for(key <- gen({:array, :string}), into: %{}, do: {key, gen(type)})
-  end
+  def gen(:naive_datetime), do: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
+  def gen({:map, type}), do: for(key <- gen({:array, :string}), into: %{}, do: {key, gen(type)})
 
   # Special generators for helpful things
-  def gen(:email), do: "#{gen(:string)}@#{gen(:string)}.#{gen(:string)}"
+  def gen(:email), do: "#{gen(:string)}@#{gen(:url)}"
 
   def gen(:url) do
     host = random_string(3..6) <> "." <> random_string(4..8)
-    tld = ~w[com co.uk ninja ca biz org gov software io us rome.it ai] |> random()
+    tld = Gen.Tlds.random()
     "https://#{host}.#{tld}"
   end
 
